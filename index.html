@@ -122,6 +122,8 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .bpu{background:var(--pbg);color:var(--purple);}
 .dc{font-family:'JetBrains Mono',monospace;font-size:11px;}
 .dco{color:var(--t2);}.dcn{color:var(--amber);}.dcx{color:var(--red);font-weight:500;}.dcm{color:var(--t3);}
+.dc-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start;line-height:1.35;}
+.dc-sub{font-size:10px;}
 .ra{display:flex;gap:4px;align-items:center;}
 .rb{width:26px;height:26px;border-radius:var(--r8);border:none;background:none;color:var(--t3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s;}
 .rb:hover{background:var(--s3);color:var(--t1);}
@@ -197,6 +199,9 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .mf:nth-last-child(-n+2){border-bottom:none;}
 .mfl{font-size:9px;font-weight:500;color:var(--t3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px;}
 .mfv{font-size:11.5px;font-family:'JetBrains Mono',monospace;color:var(--t2);}
+.mfv-stack{display:flex;flex-direction:column;gap:4px;line-height:1.35;}
+.mfv-sub{font-size:10px;}
+.mfv-subtle{color:var(--t3);}
 .mfv.warn{color:var(--amber);}.mfv.over{color:var(--red);font-weight:500;}
 .mc-foot{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-top:1px solid var(--b1);flex-wrap:wrap;gap:6px;}
 
@@ -600,8 +605,15 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
       <div class="sdiv">Основна інформація</div>
       <div class="fr"><div class="fld"><label>Назва / Модель</label><input id="vName" placeholder="VW Crafter"></div><div class="fld"><label>Тип</label><input id="vType" placeholder="Фургон · вантажний"></div></div>
       <div class="fr"><div class="fld"><label>Номерний знак</label><input id="vPlate" placeholder="1AB 2345" style="text-transform:uppercase"></div><div class="fld"><label>Рік</label><input id="vYear" type="number" placeholder="2023"></div></div>
-      <div class="fr"><div class="fld"><label>№ Pojištění</label><input id="vPoj" placeholder="POJ-000000"></div><div class="fld"><label>Пробіг</label><input id="vMileage" placeholder="120 000 km"></div></div>
+      <div class="fr f3"><div class="fld"><label>№ Pojištění</label><input id="vPoj" placeholder="POJ-000000"></div><div class="fld"><label>Страховка до</label><input id="vPojUntil" type="date"></div><div class="fld"><label>Пробіг</label><input id="vMileage" placeholder="120 000 km"></div></div>
       <div class="fr"><div class="fld"><label>Стан авто</label><select id="vStatus"><option value="ok">✓ OK</option><option value="warn">⚠ Увага</option><option value="danger">✕ Критично</option></select></div><div class="fld"><label>VIN</label><input id="vVin" placeholder="WV1ZZZ2FZ..."></div></div>
+      <div class="section-hint compact">
+        <div class="hint-ico">!</div>
+        <div class="hint-copy">
+          <div class="hint-title">Страховка</div>
+          <div class="hint-text">У <strong>Pojištění</strong> зберігається номер полісу, а в полі <strong>Страховка до</strong> точна дата закінчення. Коли залишиться 30 днів або менше, дата в таблиці та картках стане червоною.</div>
+        </div>
+      </div>
       <div class="sdiv">Технічне обслуговування</div>
       <div class="section-hint compact">
         <div class="hint-ico">i</div>
@@ -789,7 +801,28 @@ async function init(){
 // ══════════════════════════════════════════════════════
 // DB LOADERS
 // ══════════════════════════════════════════════════════
-async function loadV(){const{data,error}=await db.from('vehicles').select('*').order('created_at');if(error)throw error;vehicles=data.map(r=>({id:r.id,name:r.name,type:r.type||'',plate:r.plate||'',year:r.year,poj:r.poj||'',belts:r.belts||'—',gear:r.gear||'—',stk:r.stk||'—',status:r.status||'ok',mileage:r.mileage||'',tollDate:r.toll_paid_until||null,tollAmt:r.toll_amount||'',vin:r.vin||'',nextService:r.next_service||''}));}
+async function loadV(){
+  const{data,error}=await db.from('vehicles').select('*').order('created_at');
+  if(error)throw error;
+  vehicles=data.map(r=>({
+    id:r.id,
+    name:r.name,
+    type:r.type||'',
+    plate:r.plate||'',
+    year:r.year,
+    poj:r.poj||'',
+    pojUntil:r.poj_until||r.insurance_until||null,
+    belts:r.belts||'—',
+    gear:r.gear||'—',
+    stk:r.stk||'—',
+    status:r.status||'ok',
+    mileage:r.mileage||'',
+    tollDate:r.toll_paid_until||null,
+    tollAmt:r.toll_amount||'',
+    vin:r.vin||'',
+    nextService:r.next_service||''
+  }));
+}
 async function loadD(){const{data,error}=await db.from('drivers').select('*').order('name');if(error)throw error;drivers=data.map(r=>({id:r.id,name:r.name,phone:r.phone||'',license:r.license||'',cat:r.cat||'',licExp:r.lic_exp||null,note:r.note||''}));}
 async function loadA(){const{data,error}=await db.from('driver_assignments').select('*').order('date_from',{ascending:false});if(error)throw error;assignments=data.map(r=>({id:r.id,vehicleId:r.vehicle_id,driverId:r.driver_id,dateFrom:r.date_from,dateTo:r.date_to||null,note:r.note||''}));}
 async function loadF(){const{data,error}=await db.from('fines').select('*').order('date',{ascending:false});if(error)throw error;fines=data.map(r=>({id:r.id,date:r.date,time:r.time||'',car:r.car||'',plate:r.plate||'',driver:r.driver||'',driverId:r.driver_id||null,reason:r.reason||'',amount:r.amount||0,status:r.status||'pending',note:r.note||'',place:r.place||''}));}
@@ -829,6 +862,8 @@ function dateCardCls(v){return deadlineCardClass(daysUntilMonthYear(v));}
 function tollCls(ds){return deadlineClass(daysUntilDateString(ds));}
 function tollCardCls(ds){return deadlineCardClass(daysUntilDateString(ds));}
 function licenseCls(ds){return deadlineClass(daysUntilDateString(ds));}
+function insuranceDesk(poj,ds){return`<div class="dc-stack"><div class="${poj?'dco':'dcm'}">${poj||'—'}</div><div class="dc-sub ${ds?tollCls(ds):'dcm'}">до ${ds?fmtD(ds):'—'}</div></div>`;}
+function insuranceCard(poj,ds){return`<div class="mfv-stack"><div class="mfv ${poj?'':'mfv-subtle'}">${poj||'—'}</div><div class="mfv mfv-sub ${ds?tollCardCls(ds):'mfv-subtle'}">до ${ds?fmtD(ds):'—'}</div></div>`;}
 function vehiclePresenceCls(hasDriver){return hasDriver?'busy':'free';}
 function deadlineMetaLabel(dateFrom,dateTo){return`З ${fmtDT(dateFrom)} до ${dateTo?fmtDT(dateTo):'зараз'}`;}
 function sBadge(s){return s==='ok'?'<span class="bx bok">OK</span>':s==='warn'?'<span class="bx bwn">Увага</span>':'<span class="bx bdg">Критично</span>';}
@@ -959,7 +994,7 @@ function renderFleet(){
       <td class="vh-td-main"><div class="vehicle-presence start ${presenceCls}"><div><span class="c1">${v.name}</span>${v.type?`<span class="c2">${v.type}</span>`:''}</div></div></td>
       <td class="vh-td-plate"><div class="vehicle-presence end ${presenceCls}"><span class="plaque">${v.plate}</span></div></td>
       <td class="dc dco">${v.year||'—'}</td>
-      <td class="dc dcm">${v.poj||'—'}</td>
+      <td class="dc">${insuranceDesk(v.poj,v.pojUntil)}</td>
       <td class="dc ${tollCls(v.tollDate)}">${v.tollDate?fmtD(v.tollDate):'—'}</td>
       <td class="dc ${dateCls(v.belts)}">${v.belts}</td>
       <td class="dc dco">${v.gear}</td>
@@ -1004,7 +1039,7 @@ function renderFleetCards(){
         ${sBadge(v.status)}
       </div>
       <div class="mc-grid">
-        <div class="mf"><div class="mfl">Pojištění</div><div class="mfv">${v.poj||'—'}</div></div>
+        <div class="mf"><div class="mfl">Pojištění</div>${insuranceCard(v.poj,v.pojUntil)}</div>
         <div class="mf"><div class="mfl">Дальниця до</div><div class="mfv ${tollCardCls(v.tollDate)}">${v.tollDate?fmtD(v.tollDate):'—'}</div></div>
         <div class="mf"><div class="mfl">Ремені</div><div class="mfv ${dateCardCls(v.belts)}">${v.belts}</div></div>
         <div class="mf"><div class="mfl">STK</div><div class="mfv ${dateCardCls(v.stk)}">${v.stk}</div></div>
@@ -1030,6 +1065,7 @@ function openVModal(id){
   document.getElementById('vPlate').value=v?.plate||'';
   document.getElementById('vYear').value=v?.year||'';
   document.getElementById('vPoj').value=v?.poj||'';
+  document.getElementById('vPojUntil').value=v?.pojUntil||'';
   document.getElementById('vMileage').value=v?.mileage||'';
   document.getElementById('vStatus').value=v?.status||'ok';
   document.getElementById('vVin').value=v?.vin||'';
@@ -1054,7 +1090,23 @@ async function saveVehicle(){
   const tireSeason=document.getElementById('vTireSeason').value;
   const tireSize=document.getElementById('vTireSize').value.trim();
   if(tireSize&&!tireSeason){toast('Спочатку оберіть сезон резини','er');return;}
-  const data={name,type:document.getElementById('vType').value.trim(),plate:document.getElementById('vPlate').value.trim().toUpperCase(),year:parseInt(document.getElementById('vYear').value)||null,poj:document.getElementById('vPoj').value.trim(),mileage:document.getElementById('vMileage').value.trim(),status:document.getElementById('vStatus').value,vin:document.getElementById('vVin').value.trim(),belts:document.getElementById('vBelts').value.trim()||'—',gear:document.getElementById('vGear').value.trim()||'—',stk:document.getElementById('vStk').value.trim()||'—',next_service:document.getElementById('vNextService').value.trim(),toll_paid_until:document.getElementById('vTollDate').value||null,toll_amount:document.getElementById('vTollAmt').value.trim()};
+  const data={
+    name,
+    type:document.getElementById('vType').value.trim(),
+    plate:document.getElementById('vPlate').value.trim().toUpperCase(),
+    year:parseInt(document.getElementById('vYear').value)||null,
+    poj:document.getElementById('vPoj').value.trim(),
+    poj_until:document.getElementById('vPojUntil').value||null,
+    mileage:document.getElementById('vMileage').value.trim(),
+    status:document.getElementById('vStatus').value,
+    vin:document.getElementById('vVin').value.trim(),
+    belts:document.getElementById('vBelts').value.trim()||'—',
+    gear:document.getElementById('vGear').value.trim()||'—',
+    stk:document.getElementById('vStk').value.trim()||'—',
+    next_service:document.getElementById('vNextService').value.trim(),
+    toll_paid_until:document.getElementById('vTollDate').value||null,
+    toll_amount:document.getElementById('vTollAmt').value.trim()
+  };
   setSave('vSaveBtn',true);sync('busy');
   try{
     let savedVehicleId=editVId;
@@ -1069,7 +1121,12 @@ async function saveVehicle(){
     await syncVehicleTire(savedVehicleId);
     await Promise.all([loadV(),loadT()]);
     sync('ok');toast(editVId?'Авто оновлено ✓':'Авто додано ✓');closeVModal();renderFleet();populateSels();
-  }catch(e){sync('err');toast('Помилка: '+e.message,'er');setSave('vSaveBtn',false);}
+  }catch(e){
+    sync('err');
+    const msg=e.message||String(e);
+    toast(msg.includes('poj_until')?'У таблиці vehicles потрібно додати поле poj_until (date).':'Помилка: '+msg,'er');
+    setSave('vSaveBtn',false);
+  }
 }
 
 async function delVehicle(id){
