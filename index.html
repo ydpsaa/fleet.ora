@@ -121,7 +121,8 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .bbl{background:var(--bbg);color:var(--blue);}
 .bpu{background:var(--pbg);color:var(--purple);}
 .dc{font-family:'JetBrains Mono',monospace;font-size:11px;}
-.dco{color:var(--t2);}.dcn{color:var(--amber);}.dcx{color:var(--red);font-weight:500;}.dcm{color:var(--t3);}
+.dco{color:var(--t2);}.dcn{color:var(--amber);}.dcx{color:var(--red);font-weight:600;}.dcm{color:var(--t3);}
+.dcw{color:var(--t1);font-weight:500;}
 .dc-stack{display:flex;flex-direction:column;gap:3px;align-items:flex-start;line-height:1.35;}
 .dc-sub{font-size:10px;}
 .ra{display:flex;gap:4px;align-items:center;}
@@ -183,7 +184,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .vehicle-presence-card.busy .mct{color:var(--red);}
 .mc-top{display:flex;align-items:flex-start;justify-content:space-between;padding:13px 13px 10px;}
 .mc-info .mcn{font-size:14px;font-weight:600;color:var(--t1);line-height:1.2;}
-.mc-info .mct{font-size:11px;color:var(--t3);margin-top:3px;}
+.mc-info .mct{font-size:11px;color:rgba(255,255,255,.82);margin-top:3px;}
 .mc-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
 .mc-pl{display:inline-flex;background:var(--s2);border:1px solid var(--b2);border-radius:var(--r4);padding:3px 8px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:var(--t1);letter-spacing:.07em;}
 .mc-acts{display:flex;gap:4px;}
@@ -191,19 +192,20 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .mab:active{transform:scale(.9);}
 .mc-drv{padding:9px 13px;border-top:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .mc-dname{font-size:13px;font-weight:600;color:var(--green);}
-.mc-dnone{font-size:12px;color:var(--t3);}
-.mc-dsince{font-size:10px;color:var(--t3);font-family:'JetBrains Mono',monospace;}
+.mc-dnone{font-size:12px;color:rgba(255,255,255,.8);}
+.mc-dsince{font-size:10px;color:rgba(255,255,255,.72);font-family:'JetBrains Mono',monospace;}
 .mc-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--b1);}
 .mf{padding:9px 13px;border-right:1px solid var(--b1);border-bottom:1px solid var(--b1);}
 .mf:nth-child(2n){border-right:none;}
 .mf:nth-last-child(-n+2){border-bottom:none;}
-.mfl{font-size:9px;font-weight:500;color:var(--t3);letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px;}
-.mfv{font-size:11.5px;font-family:'JetBrains Mono',monospace;color:var(--t2);}
+.mfl{font-size:9px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.04em;text-transform:uppercase;margin-bottom:3px;}
+.mfv{font-size:11.5px;font-family:'JetBrains Mono',monospace;color:var(--t1);}
 .mfv-stack{display:flex;flex-direction:column;gap:4px;line-height:1.35;}
 .mfv-sub{font-size:10px;}
-.mfv-subtle{color:var(--t3);}
-.mfv.warn{color:var(--amber);}.mfv.over{color:var(--red);font-weight:500;}
+.mfv-subtle{color:rgba(255,255,255,.72);}
+.mfv.warn{color:var(--amber);}.mfv.over{color:var(--red);font-weight:600;}
 .mc-foot{display:flex;align-items:center;justify-content:space-between;padding:9px 13px;border-top:1px solid var(--b1);flex-wrap:wrap;gap:6px;}
+.mc-foot-note{font-size:11px;color:rgba(255,255,255,.72);font-family:'JetBrains Mono',monospace;}
 
 /* ── CALENDAR ── */
 .cal-tb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
@@ -282,8 +284,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 
 /* helper blocks */
 .panel-hint{margin-bottom:12px;}
-.section-hint{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r16);}
-.section-hint.compact{padding:12px 13px;border-radius:var(--r12);}
+.section-hint,.section-hint.compact,.ahint,.ahint.show{display:none !important;}
 .hint-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--s3);border:1px solid var(--b1);color:var(--t1);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
 .hint-copy{display:flex;flex-direction:column;gap:4px;min-width:0;}
 .hint-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t1);}
@@ -295,8 +296,6 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
 .hint-tag.deadline{background:var(--rbg);border-color:rgba(224,84,84,.28);color:var(--red);}
 
 /* auto-hint */
-.ahint{display:none;align-items:flex-start;gap:12px;padding:13px 14px;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);}
-.ahint.show{display:flex;}
 .ahint.ok{background:var(--gbg);border-color:rgba(76,175,125,.25);}
 .ahint.warn{background:var(--abg);border-color:rgba(224,164,74,.3);}
 .ahint-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;}
@@ -455,7 +454,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
         <div class="hint-ico">i</div>
         <div class="hint-copy">
           <div class="hint-title">Швидкі орієнтири</div>
-          <div class="hint-text">Зелена рамка означає, що авто зараз без водія. Червона рамка означає, що водій уже їде на машині. Червоний строк у дедлайнах означає, що залишилось 30 днів або менше.</div>
+          <div class="hint-text">Зелена рамка означає, що авто зараз без водія. Червона рамка означає, що водій уже їде на машині. Червоний строк у дедлайнах означає, що до завершення залишився 1 місяць або менше.</div>
           <div class="hint-tags">
             <span class="hint-tag good">Без водія</span>
             <span class="hint-tag busy">Водій у рейсі</span>
@@ -611,7 +610,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
         <div class="hint-ico">!</div>
         <div class="hint-copy">
           <div class="hint-title">Страховка</div>
-          <div class="hint-text">У <strong>Pojištění</strong> зберігається номер полісу, а в полі <strong>Страховка до</strong> точна дата закінчення. Коли залишиться 30 днів або менше, дата в таблиці та картках стане червоною.</div>
+          <div class="hint-text">У <strong>Pojištění</strong> зберігається номер полісу, а в полі <strong>Страховка до</strong> точна дата закінчення. Коли до завершення залишиться 1 місяць або менше, дата в таблиці та картках стане червоною.</div>
         </div>
       </div>
       <div class="sdiv">Технічне обслуговування</div>
@@ -619,7 +618,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
         <div class="hint-ico">i</div>
         <div class="hint-copy">
           <div class="hint-title">Формат строків</div>
-          <div class="hint-text">Для полів <strong>Ремені</strong> і <strong>STK</strong> використовуйте формат <strong>MM/YYYY</strong>. За 30 днів до кінця строку або після прострочки ці значення підсвітяться червоним у списках.</div>
+          <div class="hint-text">Для полів <strong>Ремені</strong> і <strong>STK</strong> використовуйте формат <strong>MM/YYYY</strong>. За 1 місяць до кінця строку або після прострочки ці значення підсвітяться червоним у списках.</div>
         </div>
       </div>
       <div class="fr"><div class="fld"><label>Заміна ременів</label><input id="vBelts" placeholder="04/2026"></div><div class="fld"><label>Обслуг. коробки</label><input id="vGear" placeholder="80 000 km"></div></div>
@@ -629,7 +628,7 @@ tbody td{padding:10px 12px;font-size:12.5px;color:var(--t2);vertical-align:middl
         <div class="hint-ico">!</div>
         <div class="hint-copy">
           <div class="hint-title">Оплачена до</div>
-          <div class="hint-text">Для <strong>Дальниця</strong> обирайте точну дату. Коли до завершення залишиться 30 днів або менше, строк автоматично стане червоним у таблиці та картках.</div>
+          <div class="hint-text">Для <strong>Дальниця</strong> обирайте точну дату. Коли до завершення залишиться 1 місяць або менше, строк автоматично стане червоним у таблиці та картках.</div>
         </div>
       </div>
       <div class="fr"><div class="fld"><label>Оплачена до</label><input id="vTollDate" type="date"></div><div class="fld"><label>Сума / тариф</label><input id="vTollAmt" placeholder="5 800 Kč / рік"></div></div>
@@ -838,30 +837,38 @@ function sync(s){document.querySelectorAll('.syncdot').forEach(d=>{d.className='
 function toast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';clearTimeout(toastTmr);toastTmr=setTimeout(()=>t.classList.remove('show'),3200);}
 function setSave(id,on){const b=document.getElementById(id);if(b){b.disabled=on;b.textContent=on?'Збереження...':'Зберегти';}}
 
-function deadlineClass(days,neutral='dcm',ok='dco'){
-  if(days==null)return neutral;
-  return days<=30?'dcx':ok;
+function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x;}
+function subtractCalendarMonth(d){
+  const base=new Date(d);
+  const targetMonthStart=new Date(base.getFullYear(),base.getMonth()-1,1);
+  const maxDay=new Date(targetMonthStart.getFullYear(),targetMonthStart.getMonth()+1,0).getDate();
+  return new Date(targetMonthStart.getFullYear(),targetMonthStart.getMonth(),Math.min(base.getDate(),maxDay),0,0,0,0);
 }
-function deadlineCardClass(days){return days!=null&&days<=30?'over':'';}
-function daysUntilDateString(ds){
+function deadlineClass(deadline,neutral='dcm',ok='dco'){
+  if(!deadline||Number.isNaN(deadline.getTime()))return neutral;
+  return startOfDay(new Date())>=subtractCalendarMonth(deadline)?'dcx':ok;
+}
+function deadlineCardClass(deadline){
+  return deadline&&!Number.isNaN(deadline.getTime())&&startOfDay(new Date())>=subtractCalendarMonth(deadline)?'over':'';
+}
+function dateDeadline(ds){
   if(!ds)return null;
   const deadline=new Date(`${ds}T23:59:59`);
-  if(Number.isNaN(deadline.getTime()))return null;
-  return Math.ceil((deadline.getTime()-Date.now())/DAY_MS);
+  return Number.isNaN(deadline.getTime())?null:deadline;
 }
-function daysUntilMonthYear(v){
+function monthYearDeadline(v){
   if(!v||v==='—')return null;
-  if(String(v).match(/ПРОСТ|НЕЗАБ/i))return-1;
+  if(String(v).match(/ПРОСТ|НЕЗАБ/i))return new Date(0);
   const m=String(v).match(/^(\d{2})\/(\d{4})$/);
   if(!m)return null;
   const deadline=new Date(parseInt(m[2]),parseInt(m[1]),0,23,59,59,999);
-  return Math.ceil((deadline.getTime()-Date.now())/DAY_MS);
+  return Number.isNaN(deadline.getTime())?null:deadline;
 }
-function dateCls(v){return deadlineClass(daysUntilMonthYear(v));}
-function dateCardCls(v){return deadlineCardClass(daysUntilMonthYear(v));}
-function tollCls(ds){return deadlineClass(daysUntilDateString(ds));}
-function tollCardCls(ds){return deadlineCardClass(daysUntilDateString(ds));}
-function licenseCls(ds){return deadlineClass(daysUntilDateString(ds));}
+function dateCls(v){return deadlineClass(monthYearDeadline(v));}
+function dateCardCls(v){return deadlineCardClass(monthYearDeadline(v));}
+function tollCls(ds){return deadlineClass(dateDeadline(ds));}
+function tollCardCls(ds){return deadlineCardClass(dateDeadline(ds));}
+function licenseCls(ds){return deadlineClass(dateDeadline(ds));}
 function insuranceDesk(poj,ds){return`<div class="dc-stack"><div class="${poj?'dco':'dcm'}">${poj||'—'}</div><div class="dc-sub ${ds?tollCls(ds):'dcm'}">до ${ds?fmtD(ds):'—'}</div></div>`;}
 function insuranceCard(poj,ds){return`<div class="mfv-stack"><div class="mfv ${poj?'':'mfv-subtle'}">${poj||'—'}</div><div class="mfv mfv-sub ${ds?tollCardCls(ds):'mfv-subtle'}">до ${ds?fmtD(ds):'—'}</div></div>`;}
 function vehiclePresenceCls(hasDriver){return hasDriver?'busy':'free';}
@@ -996,7 +1003,7 @@ function renderFleet(){
       <td class="dc dco">${v.year||'—'}</td>
       <td class="dc">${insuranceDesk(v.poj,v.pojUntil)}</td>
       <td class="dc ${tollCls(v.tollDate)}">${v.tollDate?fmtD(v.tollDate):'—'}</td>
-      <td class="dc ${dateCls(v.belts)}">${v.belts}</td>
+      <td class="dc dcw">${v.belts}</td>
       <td class="dc dco">${v.gear}</td>
       <td class="dc ${dateCls(v.stk)}">${v.stk}</td>
       <td>${onCarTire?tireBadge(onCarTire.season)+' <span class="dc dcm">'+onCarTire.size+'</span>':'<span class="dc dcm">—</span>'}</td>
@@ -1041,13 +1048,13 @@ function renderFleetCards(){
       <div class="mc-grid">
         <div class="mf"><div class="mfl">Pojištění</div>${insuranceCard(v.poj,v.pojUntil)}</div>
         <div class="mf"><div class="mfl">Дальниця до</div><div class="mfv ${tollCardCls(v.tollDate)}">${v.tollDate?fmtD(v.tollDate):'—'}</div></div>
-        <div class="mf"><div class="mfl">Ремені</div><div class="mfv ${dateCardCls(v.belts)}">${v.belts}</div></div>
+        <div class="mf"><div class="mfl">Ремені</div><div class="mfv">${v.belts}</div></div>
         <div class="mf"><div class="mfl">STK</div><div class="mfv ${dateCardCls(v.stk)}">${v.stk}</div></div>
         <div class="mf"><div class="mfl">Коробка</div><div class="mfv">${v.gear}</div></div>
         <div class="mf"><div class="mfl">Пробіг</div><div class="mfv">${v.mileage||'—'}</div></div>
       </div>
       <div class="mc-foot">
-        ${onCarTire?tireBadge(onCarTire.season)+' <span style="font-size:11px;color:var(--t3);font-family:JetBrains Mono,monospace">'+onCarTire.size+'</span>':'<span style="font-size:11px;color:var(--t3)">Резина не вказана</span>'}
+        ${onCarTire?tireBadge(onCarTire.season)+' <span class="mc-foot-note">'+onCarTire.size+'</span>':'<span class="mc-foot-note">Резина не вказана</span>'}
       </div>
     </div>`;
   }).join('');
